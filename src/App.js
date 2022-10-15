@@ -1,9 +1,8 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import Moviebox from "./components/MovieBox";
 import "bootstrap/dist/css/bootstrap.css";
 import Nbar from "./components/Nbar";
-import NotFound from "./components/NotFound";
+import Home from "./components/Home";
 
 const API_URL =
   "https://api.themoviedb.org/3/movie/popular?api_key=8418700a767c9decaae34b99f10abd42";
@@ -41,7 +40,6 @@ function App() {
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
-
   function handleFavorite(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -57,28 +55,11 @@ function App() {
       />
 
       {/* Container - Body */}
-      <div>
-        {movies.length > 0 ? (
-          <div className='container'>
-            <div className='moviebox--grid'>
-              {movies.map((moviereq) => (
-                <Moviebox
-                  key={moviereq.id}
-                  title={moviereq.title}
-                  vote_average={moviereq.vote_average}
-                  release_date={moviereq.release_date}
-                  poster_path={moviereq.poster_path}
-                  overview={moviereq.overview}
-                  isFavorite={isFavorite}
-                  handleFavorite={handleFavorite}
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <NotFound />
-        )}
-      </div>
+      <Home
+        movies={movies}
+        isFavorite={isFavorite}
+        handleFavorite={handleFavorite}
+      />
     </>
   );
 }
