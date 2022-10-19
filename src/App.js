@@ -12,7 +12,6 @@ const API_SEARCH =
 function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  const [isFavorite, setIsFavorite] = useState(false);
 
   //Consumir API de peliculas
   useEffect(() => {
@@ -20,8 +19,17 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setMovies(data.results);
+        createFavorite(data.results);
       });
   }, []);
+
+  const createFavorite = (movies) => {
+    const moviesWithFavorites = [...movies];
+    moviesWithFavorites.forEach(function (movie) {
+      movie.isFavorite = false;
+    });
+    setMovies(moviesWithFavorites);
+  };
 
   //Buscar pelicula
   const searchMovie = async (e) => {
@@ -31,7 +39,6 @@ function App() {
       const url = API_SEARCH + `${query}`;
       const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
       setMovies(data.results);
     } catch (e) {
       console.log(e);
@@ -40,11 +47,25 @@ function App() {
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
-  function handleFavorite(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    setIsFavorite(true);
-  }
+
+  //Cambia movieBox a favorito
+  const handleFavorite = (id, isFavorite) => {
+    // const findNewMovie = movies.findIndex((obj) => obj.id === id);
+    const newMovies = movies.map((obj) => {
+      if (obj.id === id) {
+        return { ...obj, isFavorite: !isFavorite };
+      }
+      return obj;
+    });
+    setMovies(newMovies);
+
+    // const newMovies = movies.map((obj) => {
+    //   if (obj.id === id) {
+    //     return { ...obj, isFavorite: !isFavorite };
+    //   }
+    //   return obj;
+    // });
+  };
 
   return (
     <>
@@ -55,11 +76,7 @@ function App() {
       />
 
       {/* Container - Body */}
-      <Home
-        movies={movies}
-        isFavorite={isFavorite}
-        handleFavorite={handleFavorite}
-      />
+      <Home movies={movies} handleFavorite={handleFavorite} />
     </>
   );
 }
