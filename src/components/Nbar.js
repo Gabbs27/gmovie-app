@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import { Routes, Route, Link } from "react-router-dom";
 import {
   Navbar,
   Container,
@@ -10,6 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 
+//TODO: REFACTORIZAR NAVBAR Y FORMULARIO DE BUSQUEDA.
 function Nbar(props) {
   return (
     <Navbar bg='dark' expand='lg' variant='dark'>
