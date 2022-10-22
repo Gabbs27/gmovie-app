@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import NotFound from "./NotFound";
 import Moviebox from "./MovieBox";
 
+// function handleFavorite(movie.isFavorite, moviesWithFavorites.id) {
+//     // e.stopPropagation();
+//     // e.preventDefault();
+
+//   }
+
 function Home(props) {
   return (
     <div>
