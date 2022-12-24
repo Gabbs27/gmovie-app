@@ -1,6 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, createContext } from "react";
 import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Nbar from "./components/Nbar";
@@ -16,6 +15,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const favContext = createContext([]);
 
   //Consumir API de peliculas
   useEffect(() => {
@@ -98,7 +98,7 @@ function App() {
         searchMovie={searchMovie}
         query={query}
         changeHandler={changeHandler}
-      />  
+      />
       <BrowserRouter>
         <Routes>
           <Route
@@ -108,7 +108,11 @@ function App() {
           {/* Container - Body */}
           <Route
             path='Favourites'
-            element={<Favorites movies={favoriteMovies} />}
+            element={
+              <favContext.Provider value={favoriteMovies}>
+                <Favorites />
+              </favContext.Provider>
+            }
           />
         </Routes>
       </BrowserRouter>

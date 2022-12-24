@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 
-//TODO: REFACTORIZAR NAVBAR Y FORMULARIO DE BUSQUEDA.
+
 function Nbar(props) {
   return (
     <Navbar bg='dark' expand='lg' variant='dark'>
