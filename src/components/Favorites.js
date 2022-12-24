@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import NotFound from "./NotFound";
 import Moviebox from "./MovieBox";
 
@@ -9,12 +9,13 @@ import Moviebox from "./MovieBox";
 //   }
 
 function Home(props) {
+  const favMovies = useContext(props.favContext);
   return (
     <div>
       {props.movies.length > 0 ? (
         <div className='container'>
           <div className='moviebox--grid'>
-            {props.movies.map((moviereq) => (
+            {favMovies.map((moviereq) => (
               <Moviebox
                 key={moviereq.id}
                 id={moviereq.id}
