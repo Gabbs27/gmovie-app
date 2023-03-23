@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState, createContext } from "react";
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Nbar from "./components/Nbar";
 import Home from "./components/Home";

@@ -14,7 +14,7 @@ function Nbar(props) {
   return (
     <Navbar bg='dark' expand='lg' variant='dark'>
       <Container fluid>
-        <Navbar.Brand href='/'>R-Movie App</Navbar.Brand>
+        <Navbar.Brand href='/'>G-Movie App</Navbar.Brand>
         <Navbar.Brand href=''>Trending</Navbar.Brand>
         <Navbar.Brand href='/Favourites'>Favourites</Navbar.Brand>
 

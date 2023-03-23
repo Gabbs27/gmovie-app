@@ -14,7 +14,7 @@ function ModalPage(props) {
           src={props.API_IMG + props.poster_path}
           alt={props.title}
         />
-        <h3>{props.title}h</h3>
+        <h3 style={{ color: "black" }}>{props.title}</h3>
         <h4>IMDb: {props.vote_average}</h4>
         <h5>Release Date: {props.release_date}</h5>
         <br></br>
