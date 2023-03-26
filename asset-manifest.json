@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/gmovie-app/static/css/main.e7c011a2.css",
-    "main.js": "/gmovie-app/static/js/main.704e967d.js",
+    "main.js": "/gmovie-app/static/js/main.c1fda750.js",
     "index.html": "/gmovie-app/index.html",
     "main.e7c011a2.css.map": "/gmovie-app/static/css/main.e7c011a2.css.map",
-    "main.704e967d.js.map": "/gmovie-app/static/js/main.704e967d.js.map"
+    "main.c1fda750.js.map": "/gmovie-app/static/js/main.c1fda750.js.map"
   },
   "entrypoints": [
     "static/css/main.e7c011a2.css",
-    "static/js/main.704e967d.js"
+    "static/js/main.c1fda750.js"
   ]
 }
