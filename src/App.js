@@ -104,7 +104,7 @@ function App() {
               element={<Home movies={movies} handleFavorite={handleFavorite} />}
             />
             {/* Container - Body */}
-            <Route path='Favourites' element={<Favorites />} />
+            <Route path='Favorites' element={<Favorites />} />
           </Routes>
         </BrowserRouter>
       </FavContext.Provider>

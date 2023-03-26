@@ -9,14 +9,13 @@ import {
   Button,
 } from "react-bootstrap";
 
-
 function Nbar(props) {
   return (
     <Navbar bg='dark' expand='lg' variant='dark'>
       <Container fluid>
         <Navbar.Brand href='/'>G-Movie App</Navbar.Brand>
         <Navbar.Brand href=''>Trending</Navbar.Brand>
-        <Navbar.Brand href='/Favourites'>Favourites</Navbar.Brand>
+        <Navbar.Brand href='/Favorites'>Favourites</Navbar.Brand>
 
         <Navbar.Toggle aria-controls='navbarScroll'></Navbar.Toggle>
         <Navbar.Collapse id='navbarScroll'>
