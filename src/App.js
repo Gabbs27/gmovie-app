@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Nbar from "./components/Nbar";
 import Home from "./components/Home";
@@ -23,10 +23,20 @@ function App() {
   //Consumir API de peliculas
   useEffect(() => {
     fetch(API_URL)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error(`HTTP error ${res.status}`);
+        }
+      })
       .then((data) => {
+        console.log("Fetched data:", data);
         setMovies(data.results);
         createFavorite(data.results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -97,19 +107,19 @@ function App() {
         changeHandler={changeHandler}
       />
       <FavContext.Provider value={favoriteMovies}>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route
+              exact
               path='/'
               element={<Home movies={movies} handleFavorite={handleFavorite} />}
             />
             {/* Container - Body */}
-            <Route path='Favorites' element={<Favorites />} />
+            <Route exact path='/favorites' element={<Favorites />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </FavContext.Provider>
     </>
   );
 }
-
 export default App;

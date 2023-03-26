@@ -1,33 +1,30 @@
 import React from "react";
-import NotFound from "./NotFound";
-import Moviebox from "./MovieBox";
+import MovieBox from "./MovieBox";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-function Home(props) {
+const Home = ({ movies, handleFavorite }) => {
   return (
-    <div>
-      {props.movies.length > 0 ? (
-        <div className='container'>
-          <div className='moviebox--grid'>
-            {props.movies.map((moviereq) => (
-              <Moviebox
-                key={moviereq.id}
-                id={moviereq.id}
-                title={moviereq.title}
-                vote_average={moviereq.vote_average}
-                release_date={moviereq.release_date}
-                poster_path={moviereq.poster_path}
-                overview={moviereq.overview}
-                isFavorite={moviereq.isFavorite}
-                handleFavorite={props.handleFavorite}
-              />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <NotFound />
-      )}
-    </div>
+    <Container>
+      <Row className='justify-content-center'>
+        {movies.map((movie) => (
+          <Col key={movie.id} md={4} lg={3} className='mb-4'>
+            <MovieBox
+              id={movie.id}
+              title={movie.title}
+              poster_path={movie.poster_path}
+              overview={movie.overview}
+              vote_average={movie.vote_average}
+              release_date={movie.release_date}
+              isFavorite={movie.isFavorite}
+              handleFavorite={handleFavorite}
+            />
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
-}
+};
 
 export default Home;
