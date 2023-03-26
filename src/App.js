@@ -1,10 +1,11 @@
 import "./App.css";
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Nbar from "./components/Nbar";
 import Home from "./components/Home";
 import Favorites from "./components/Favorites";
+import FavContext from "./context/FavContext";
 
 const API_URL =
   "https://api.themoviedb.org/3/movie/popular?api_key=8418700a767c9decaae34b99f10abd42";
@@ -14,8 +15,10 @@ const API_SEARCH =
 function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
-  const favContext = createContext([]);
+  const [favoriteMovies, setFavoriteMovies] = useState(() => {
+    const savedFavs = localStorage.getItem("favoriteMovies");
+    return savedFavs ? JSON.parse(savedFavs) : [];
+  });
 
   //Consumir API de peliculas
   useEffect(() => {
@@ -54,42 +57,36 @@ function App() {
     setQuery(e.target.value);
   };
 
-  //TODO: Migrar a un FIND
-  const handleFavorite = (id, isFavorite) => {
-    // const findNewMovie = movies.findIndex((obj) => obj.id === id);
-    const newMovies = movies.map((obj) => {
-      if (obj.id === id) {
-        return { ...obj, isFavorite: !isFavorite };
+  const handleFavorite = (id) => {
+    const newMovies = movies.map((movie) => {
+      if (movie.id === id) {
+        const updatedMovie = { ...movie, isFavorite: !movie.isFavorite };
+        if (updatedMovie.isFavorite) {
+          setFavoriteMovies((prevFavMovies) => {
+            const updatedFavMovies = [...prevFavMovies, updatedMovie];
+            localStorage.setItem(
+              "favoriteMovies",
+              JSON.stringify(updatedFavMovies)
+            );
+            return updatedFavMovies;
+          });
+        } else {
+          setFavoriteMovies((prevFavMovies) => {
+            const updatedFavMovies = prevFavMovies.filter(
+              (favMovie) => favMovie.id !== id
+            );
+            localStorage.setItem(
+              "favoriteMovies",
+              JSON.stringify(updatedFavMovies)
+            );
+            return updatedFavMovies;
+          });
+        }
+        return updatedMovie;
       }
-      return obj;
+      return movie;
     });
     setMovies(newMovies);
-    findFavorites();
-    // const newMovies = movies.map((obj) => {
-    //   if (obj.id === id) {
-    //     return { ...obj, isFavorite: !isFavorite };
-    //   }
-    //   return obj;
-    // });
-  };
-
-  const findFavorites = () => {
-    const favs = movies.filter((obj) => obj.isFavorite === true);
-    setFavoriteMovies([favs]);
-    console.log(favoriteMovies);
-    // return data;
-    // });
-    // if (data.isFavorite === true) {
-    //     return { ...data };
-    //   }
-    //   return data;
-    // });
-    // if (obj.isFavorite === true) {
-    //     return { ...movies, favs };
-    //   }
-    //   return obj;
-    // });
-    // setFavoriteMovies(favs);
   };
 
   return (
@@ -99,23 +96,18 @@ function App() {
         query={query}
         changeHandler={changeHandler}
       />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path='/'
-            element={<Home movies={movies} handleFavorite={handleFavorite} />}
-          />
-          {/* Container - Body */}
-          <Route
-            path='Favourites'
-            element={
-              <favContext.Provider value={favoriteMovies}>
-                <Favorites />
-              </favContext.Provider>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+      <FavContext.Provider value={favoriteMovies}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path='/'
+              element={<Home movies={movies} handleFavorite={handleFavorite} />}
+            />
+            {/* Container - Body */}
+            <Route path='Favourites' element={<Favorites />} />
+          </Routes>
+        </BrowserRouter>
+      </FavContext.Provider>
     </>
   );
 }

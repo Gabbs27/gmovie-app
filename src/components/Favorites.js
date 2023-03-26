@@ -1,31 +1,27 @@
 import React, { useContext } from "react";
+import FavContext from "../context/FavContext"; // Adjust the path as necessary
 import NotFound from "./NotFound";
 import Moviebox from "./MovieBox";
 
-// function handleFavorite(movie.isFavorite, moviesWithFavorites.id) {
-//     // e.stopPropagation();
-//     // e.preventDefault();
+const Favorites = () => {
+  const favoriteMovies = useContext(FavContext);
 
-//   }
-
-function Home(props) {
-  const favMovies = useContext(props.favContext);
   return (
     <div>
-      {props.movies.length > 0 ? (
+      {favoriteMovies.length > 0 ? (
         <div className='container'>
           <div className='moviebox--grid'>
-            {favMovies.map((moviereq) => (
+            {favoriteMovies.map((movie) => (
               <Moviebox
-                key={moviereq.id}
-                id={moviereq.id}
-                title={moviereq.title}
-                vote_average={moviereq.vote_average}
-                release_date={moviereq.release_date}
-                poster_path={moviereq.poster_path}
-                overview={moviereq.overview}
-                isFavorite={moviereq.isFavorite}
-                handleFavorite={props.handleFavorite}
+                key={movie.id}
+                id={movie.id}
+                title={movie.title}
+                vote_average={movie.vote_average}
+                release_date={movie.release_date}
+                poster_path={movie.poster_path}
+                overview={movie.overview}
+                isFavorite={movie.isFavorite}
+                handleFavorite={() => {}}
               />
             ))}
           </div>
@@ -35,6 +31,6 @@ function Home(props) {
       )}
     </div>
   );
-}
+};
 
-export default Home;
+export default Favorites;
